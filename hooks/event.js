@@ -1,5 +1,6 @@
 "use strict";
-exports.event = function (req, res) {
+
+exports.eventlaunch = function (req, res) {
   if (!req.clientId) {
     return res.sendUnauthenticated();
   }

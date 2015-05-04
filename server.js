@@ -11,7 +11,7 @@ global.restifyOAuth2 = require("restify-oauth2");
 var cluster = require('cluster');
 var hooks = require("./hooks/hooks");
 var events = require("./hooks/event");
-var initial = require("./hooks/initial");
+var initials = require("./hooks/initial");
 // Process variables
 
 var server = restify.createServer({
@@ -40,7 +40,7 @@ server.use(restify.authorizationParser());
 server.use(restify.bodyParser({ mapParams: false }));
 	restifyOAuth2.cc(server, { tokenEndpoint: RESOURCES.TOKEN, hooks: hooks });
 	
-server.get(RESOURCES.INITIAL, initial.initial);
+server.get(RESOURCES.INITIAL, initials.initialz);
 
 server.post(RESOURCES.EVENT, events.eventlaunch);
 

@@ -15,7 +15,6 @@ sudo apt-get -y -q install git
 wget https://bootstrap.pypa.io/get-pip.py
 sudo python get-pip.py
 pip install requests
-sudo shutdown -r now
 git clone https://github.com/eimink/vsaa-server-nodejs.git
 cd vsaa-server-nodejs
 npm install restify-oauth2
@@ -29,6 +28,7 @@ echo "CREATE TABLE IF NOT EXISTS VSAA.Applications ( Id INT UNSIGNED NOT NULL AU
 echo "DROP TABLE IF EXISTS VSAA.Events ;" >> run.sql
 echo "CREATE TABLE IF NOT EXISTS VSAA.Events ( Id INT UNSIGNED NOT NULL AUTO_INCREMENT , DeviceIdentifier VARCHAR(128) NOT NULL , Description VARCHAR(255) NOT NULL , Logged TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() , Applications_Id INT UNSIGNED NOT NULL , PRIMARY KEY (Id) , FULLTEXT INDEX Description (Description ASC) , INDEX Logtime (Logged ASC) , INDEX fk_Events_Applications_idx (Applications_Id ASC) , CONSTRAINT fk_Events_Applications FOREIGN KEY (Applications_Id ) REFERENCES VSAA.Applications (Id ) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE = InnoDB;" >> run.sql
 echo "SET SQL_MODE=@OLD_SQL_MODE; SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;" >> run.sql
+echo "INSERT INTO Applications (Name,APIKEY,APISECRET,APISALT) VALUES('test','6ad','96ce135c4030ac5809ce403','DERP');">> run.sql
 
 mysql -u root --password="Passw0rd" < run.sql
 echo "Change config.js to have your mysql configuration."

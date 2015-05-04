@@ -1,8 +1,12 @@
 import requests
 import json
+import sys
 
-print ("Started testing VSAA-Server localhost")
-address = 'http://localhost:8000'
+if len(sys.argv) < 2:
+  print("Usage: Your installation address")
+  exit(1)
+address = sys.argv[1]
+print ("Started testing VSAA-Server %s" % sys.argv[1])
 res = requests.get(address)
 print (res.text)
 

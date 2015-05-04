@@ -4,13 +4,13 @@ PYTHON TESTS
 
 Requires:
 
-Insertion to database 
+Insertion to database
 
 ID  NAME  APIKEY  APISECRET                APISALT
 
 0   test  6ad     96ce135c4030ac5809ce403  DERP
 
-
+INSERT INTO Applications (Name,APIKEY,APISECRET,APISALT) VALUES('test','6ad','96ce135c4030ac5809ce403','DERP');
 pip installed:
 
 https://pip.pypa.io/en/latest/installing.html
@@ -21,4 +21,3 @@ http://docs.python-requests.org/en/latest/user/install/#install
 
 
 Script is ran in the server by using: python test1.py
-

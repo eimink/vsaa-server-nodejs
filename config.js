@@ -1,24 +1,24 @@
 "use strict";
 
 module.exports = {
-	
+
 	// Default port to listen
 	listen : 8080,
-		
+
 	// Database driver
 	db_driver : "mysql",
-	
+
 	// MySQL specific
 	mysql : {
 		host : "localhost",
 		user : "root",
-		password : "",
-		database : "vsaa"
+		password : "Passw0rd",
+		database : "VSAA"
 	},
-	
+
 	// MongoDB specific
 	mongodb_uri : "vsaa",
-	
+
 	// MSSQL specific
 	mssql : {
     	user: "username",
@@ -29,7 +29,7 @@ module.exports = {
         	encrypt: false // Use this if you're on Windows Azure
     	}
 	},
-	
+
 	// Number of worker threads. Default is the number of CPUs.
 	workers : require('os').cpus().length,
 }

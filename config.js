@@ -4,7 +4,8 @@ module.exports = {
 
 	// Default port to listen
 	listen : 8080,
-
+	fb_id : "",
+	fb_secret: "",
 	// Database driver
 	db_driver : "mysql",
 

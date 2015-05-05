@@ -1,5 +1,6 @@
 "use strict";
-var http = require('http');
+var https = require('https');
+
 exports.tokenize = function (req, res) {
   var response = {"Response":0};
   if (!req.clientId) {
@@ -9,11 +10,10 @@ exports.tokenize = function (req, res) {
   {
     return res.MissingParameterError();
   }
-  var jsondata = JSON.parse(req.body.data)
-  var usertoken = jsondata.usertoken;
-  var path = '/oauth/access_token?grant_type=fb_exchange_token&client_id='+config.fb_id+
+  var usertoken = req.body.usertoken;
+  var path = '/v2.3/oauth/access_token?grant_type=fb_exchange_token&client_id='+config.fb_id+
   '&client_secret='+config.fb_secret+'&fb_exchange_token='+usertoken;
-  fbauthtoken(path,res,function(response,res){
+  fbauthtoken(path,res,function(response){
     res.contentType = "application/hal+json";
     res.send(response);
   });
@@ -22,23 +22,21 @@ exports.tokenize = function (req, res) {
 
 function fbauthtoken(callpath,res,callback) {
 
-    return http.get({
+    return https.get({
         host: 'graph.facebook.com',
         path: callpath
-    }, function(response,resp) {
+    }, function(response) {
         // Continuously update stream with data
         var body = '';
         response.on('data', function(d) {
             body += d;
         });
-        response.on('end', function(res) {
+        response.on('end', function() {
 
             // Data reception is done, do whatever with it!
             var parsed = JSON.parse(body);
             console.log(parsed);
-            callback({
-                parsed
-            },res);
+            callback(parsed.access_token);
         });
     });
 

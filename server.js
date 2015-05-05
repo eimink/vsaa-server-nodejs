@@ -12,6 +12,7 @@ var cluster = require('cluster');
 var hooks = require("./hooks/hooks");
 var events = require("./hooks/event");
 var initials = require("./hooks/initial");
+var facebook = require("./hooks/facebook");
 // Process variables
 
 var server = restify.createServer({
@@ -33,16 +34,19 @@ if (process.argc >= 2) {
 global.RESOURCES = Object.freeze({
 	INITIAL: "/",
 	TOKEN: "/login",
-	EVENT: "/event"
+	EVENT: "/event",
+	FB: "/fbtoken"
 });
 
 server.use(restify.authorizationParser());
 server.use(restify.bodyParser({ mapParams: false }));
 	restifyOAuth2.cc(server, { tokenEndpoint: RESOURCES.TOKEN, hooks: hooks });
-	
+
 server.get(RESOURCES.INITIAL, initials.initialz);
 
 server.post(RESOURCES.EVENT, events.eventlaunch);
+
+server.post(RESOURCES.FB, facebook.tokenize);
 
 // Adding error information output, and killing process when this happens.
 process.on('uncaughtException', function (err) {

@@ -47,8 +47,8 @@ function fbauthtoken(callpath,res,callback) {
 };
 
 function getself(fbtoken,ApiKey, callback){
-  var path = '/2.3/me?fields=id,name&access_token=' +fbtoken;
-  fbcalls(path,res,function(response){
+  var path = '/v2.3/me?fields=id,name&access_token=' +fbtoken;
+  fbcalls(path,function(response){
     var uid = response.id;
     var name = response.name;
     db.getUserIDByFBID(uid, function(err,res){
@@ -57,8 +57,8 @@ function getself(fbtoken,ApiKey, callback){
         res.send(500);
         return;
       }else{
-        if(res[ID] != undefined){
-          data = [res[ID],fbtoken,uid];
+        if(res.id){
+          var data = [res[ID],fbtoken,uid];
           db.setFBToken(data, function(err,res){
             if(err){
               console.log("Set FB token error");
@@ -78,16 +78,17 @@ function getself(fbtoken,ApiKey, callback){
               return;
             }else{
               var userid = uuid.v4();
-              data=[name, "facebookauthed","facebookauthed",res.Id,userid]
+              var data=[name, "facebookauthed","facebookauthed",res[0].Id,userid]
               db.setUserID(data,function(err,res){
                 if(err){
                   console.log("Set user error");
+	   	  console.log(err)
                   res.send(500);
                    return;
                    }
                 else{
                   console.log(res);
-                  data = [userid,fbtoken,uid];
+                  var data = [userid,fbtoken,uid];
                   db.setFBToken(data, function(err,res){
                     if(err){
                       console.log("Set FB token error");
@@ -110,7 +111,7 @@ function getself(fbtoken,ApiKey, callback){
 }
 
 
-function fbcalls(callpath,res,callback) {
+function fbcalls(callpath,callback) {
 
     return https.get({
         host: 'graph.facebook.com',

@@ -34,9 +34,9 @@ print("event tested")
 print("----------------")
 print("Starting FB test")
 data = {'ApiKey':'6ad','DeviceId':'test1', 'Description':'Generic event', 'message_type':'APPLICATION_EVENT_GENERIC,usertoken:%s' % fbtoken}
-event = address + "/event"
+event = address + "/fbtoken"
 authtoken = type + " " + token
 headers['Authorization'] = authtoken
 res = requests.post(event,headers=headers,data=data)
-
+print(res.text);
 print("script is done")

@@ -6,12 +6,16 @@ Very Simple Application Analytics server made using Node.js, Restify, MySQL and 
 Intented to run in conjuction with [vsaa](https://github.com/eimink/vsaa) application plugin.
 
 Based on examples from
-[restify-oauth2](https://github.com/domenic/restify-oauth2) and 
+[restify-oauth2](https://github.com/domenic/restify-oauth2) and
 [node-mysql-json-server](https://github.com/frodefi/node-mysql-json-server).
 
 This project depends on several npm packages. Make sure you have npm packages restify, restify-oauth2, underscore, crypto, sharedmemory and mysql/mongodb installed before trying to run it. Easiest way to take care of this on Linux and OS X is to run install.sh, which does the module installations for you.
 
-v.0.0.4 
+v.0.0.5
+---
+* Preview for FB Login
+
+v.0.0.4
 ---
 * Added preview support for VoltDB
 * npm install voltjs
@@ -32,5 +36,3 @@ Initial commit with two REST entry points:
 
 * /login for authentication
 * /event for storing events to database
-
-

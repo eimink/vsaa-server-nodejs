@@ -52,7 +52,54 @@ CREATE  TABLE IF NOT EXISTS `VSAA`.`Events` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `VSAA`.`User` (
+  `Id` VARCHAR(255) NOT NULL,
+  `Name` VARCHAR(128) NOT NULL,
+  `Password` VARCHAR(255) NOT NULL,
+  `Salt` VARCHAR(255) NOT NULL,
+  `Applications_Id` INT NOT NULL,
+  PRIMARY KEY (`Id`, `Applications_Id`),
+  INDEX `fk_User_Applications1_idx` (`Applications_Id` ASC),
+  INDEX `Name` (`Name` ASC),
+  CONSTRAINT `fk_User_Applications1`
+    FOREIGN KEY (`Applications_Id`)
+    REFERENCES `VSAA`.`Applications` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
 
+CREATE TABLE IF NOT EXISTS `VSAA`.`Relationship` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Status` INT NULL,
+  `User_Id` VARCHAR(255) NOT NULL,
+  `Friend_ID` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`Id`, `User_Id`, `Friend_ID`),
+  INDEX `fk_Relationship_User1_idx` (`User_Id` ASC),
+  INDEX `fk_Relationship_User2_idx` (`Friend_ID` ASC),
+  CONSTRAINT `fk_Relationship_User1`
+    FOREIGN KEY (`User_Id`)
+    REFERENCES `VSAA`.`User` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Relationship_User2`
+    FOREIGN KEY (`Friend_ID`)
+    REFERENCES `VSAA`.`User` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+CREATE TABLE IF NOT EXISTS `VSAA`.`Facebook` (
+  `User_Id` VARCHAR(255) NOT NULL,
+  `Token` VARCHAR(255) NOT NULL,
+  `UniqueID` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`User_Id`),
+  UNIQUE INDEX `UniqueID_UNIQUE` (`UniqueID` ASC),
+  CONSTRAINT `fk_Facebook_User1`
+    FOREIGN KEY (`User_Id`)
+    REFERENCES `VSAA`.`User` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -18,7 +18,7 @@ function refreshAppDatabase()
                 console.log(err)
     		return; // Not really a proper way to handle errors...
   		}
-                if(typeof res.table != 'undefined')
+                if(typeof res != 'undefined')
                 {
                  var apps = {}
                  res = res.table

@@ -10,4 +10,3 @@ use vsaa
 db.Applications.insert({"Name" : "app_name", "ApiKey" : "your_key", "ApiSecret" : "your_secret", "ApiSalt" : "your_salt" })
 
 Make sure you have installed mongojs node module in addition to the modules described in readme.
-

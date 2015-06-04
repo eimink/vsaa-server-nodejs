@@ -1,8 +1,10 @@
-------
+------------
 PYTHON TESTS
-------
+------------
 
+------
 Requires:
+------
 
 Insertion to database
 
@@ -10,12 +12,29 @@ ID  NAME  APIKEY  APISECRET                APISALT
 
 0   test  6ad     96ce135c4030ac5809ce403  DERP
 
-INSERT INTO Applications (Name,APIKEY,APISECRET,APISALT) VALUES('test','6ad','96ce135c4030ac5809ce403','DERP');
-pip installed:
+------
+RELATIO DB:
+------
+
+>INSERT INTO Applications (Name,APIKEY,APISECRET,APISALT) VALUES('test','6ad','96ce135c4030ac5809ce403','DERP');
+
+------
+MongoDB:
+------
+
+>use vsaa
+
+>db.Applications.insert({"Name" : "test", "ApiKey" : "6ad", "ApiSecret" : "96ce135c4030ac5809ce403", "ApiSalt" : "DERP" })
+
+------
+PIP installed:
+------
 
 https://pip.pypa.io/en/latest/installing.html
 
+------
 Requests module installed:
+------
 
 http://docs.python-requests.org/en/latest/user/install/#install
 

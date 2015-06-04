@@ -42,7 +42,6 @@ CREATE  TABLE IF NOT EXISTS `VSAA`.`Events` (
   `Logged` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ,
   `Applications_Id` INT UNSIGNED NOT NULL ,
   PRIMARY KEY (`Id`) ,
-  FULLTEXT INDEX `Description` (`Description` ASC) ,
   INDEX `Logtime` (`Logged` ASC) ,
   INDEX `fk_Events_Applications_idx` (`Applications_Id` ASC) ,
   CONSTRAINT `fk_Events_Applications`
@@ -58,15 +57,10 @@ CREATE TABLE IF NOT EXISTS `VSAA`.`User` (
   `Password` VARCHAR(255) NOT NULL,
   `Salt` VARCHAR(255) NOT NULL,
   `Applications_Id` INT NOT NULL,
-  PRIMARY KEY (`Id`, `Applications_Id`),
-  INDEX `fk_User_Applications1_idx` (`Applications_Id` ASC),
-  INDEX `Name` (`Name` ASC),
-  CONSTRAINT `fk_User_Applications1`
-    FOREIGN KEY (`Applications_Id`)
-    REFERENCES `VSAA`.`Applications` (`Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+  PRIMARY KEY (`Id`),
+  INDEX `fk_User_Applications2_idx` (`Applications_Id` ASC),
+  INDEX `Name` (`Name` ASC))
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `VSAA`.`Relationship` (
   `Id` INT NOT NULL AUTO_INCREMENT,
@@ -86,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `VSAA`.`Relationship` (
     REFERENCES `VSAA`.`User` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `VSAA`.`Facebook` (
   `User_Id` VARCHAR(255) NOT NULL,
@@ -99,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `VSAA`.`Facebook` (
     REFERENCES `VSAA`.`User` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

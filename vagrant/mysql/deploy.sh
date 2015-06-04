@@ -33,6 +33,7 @@ echo "CREATE TABLE IF NOT EXISTS `VSAA`.`Relationship` (  `Id` INT NOT NULL AUTO
 echo "CREATE TABLE IF NOT EXISTS `VSAA`.`Facebook` (  `User_Id` VARCHAR(255) NOT NULL,  `Token` VARCHAR(255) NOT NULL,  `UniqueID` VARCHAR(255) NOT NULL,  PRIMARY KEY (`User_Id`),  UNIQUE INDEX `UniqueID_UNIQUE` (`UniqueID` ASC),  CONSTRAINT `fk_Facebook_User1`FOREIGN KEY (`User_Id`) REFERENCES `VSAA`.`User` `Id`)    ON DELETE NO ACTION    ON UPDATE NO ACTION) ENGINE = InnoDB;" >> run.sql
 echo "SET SQL_MODE=@OLD_SQL_MODE; SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;" >> run.sql
 echo "INSERT INTO Applications (Name,APIKEY,APISECRET,APISALT) VALUES('test','6ad','96ce135c4030ac5809ce403','DERP');">> run.sql
+
 mysql -u root --password="Passw0rd" < run.sql
 echo "Change config.js to have your mysql configuration."
 echo "nodejs server.js"

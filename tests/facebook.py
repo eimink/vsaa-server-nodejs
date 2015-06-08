@@ -10,6 +10,11 @@ fbtoken = "CAAWm6iITx3UBAFbCR1zJCyTbiA5xAYC3HdmJe55LSeED8FTZAKVqJCzIF895ZBxV440Z
 print ("Started testing VSAA-Server %s" % sys.argv[1])
 print("----------------")
 res = requests.get(address)
+if(res.status_code != 200)
+{
+  print ("Failure while checking url")
+  sys.exit("url failure")
+}
 print (res.text)
 print("server done")
 print("----------------")
@@ -18,6 +23,11 @@ data = {'DeviceId':'test1', 'grant_type':'client_credentials', 'message_type':'S
 headers = {'Accept': '*/*', 'Accept-Encoding':'identity', 'Authorization':'Basic NmFkOjk2Y2UxMzVjNDAzMGFjNTgwOWNlNDAz', 'Content-Type':'application/x-www-form-urlencoded'}
 login = address + "/login"
 res = requests.post(login,headers=headers,data=data)
+if(res.status_code != 200)
+{
+  print ("Failure while authorizing")
+  sys.exit("Authorizing failure")
+}
 res = json.loads(res.text)
 token = res['access_token']
 type = res['token_type']
@@ -30,6 +40,11 @@ authtoken = type + " " + token
 headers['Authorization'] = authtoken
 res = requests.post(event,headers=headers,data=data)
 print(res.text)
+if(res.status_code != 200)
+{
+  print ("Failure while sending event")
+  sys.exit("Event failure")
+}
 print("event tested")
 print("----------------")
 print("Starting FB test")
@@ -38,5 +53,10 @@ event = address + "/fbtoken"
 authtoken = type + " " + token
 headers['Authorization'] = authtoken
 res = requests.post(event,headers=headers,data=data)
+if(res.status_code != 200)
+{
+  print ("Failure while sending facebook key")
+  sys.exit("Facebook key failure")
+}
 print(res.text);
 print("script is done")

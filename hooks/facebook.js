@@ -18,6 +18,7 @@ exports.tokenize = function (req, res) {
   fbauthtoken(path,res,function(response){
     getself(response,ApiKey,function(response){
       res.contentType = "application/hal+json";
+      var response = {"Token": response.token}
       res.send(response);
     });
   });
@@ -48,7 +49,9 @@ function fbauthtoken(callpath,res,callback) {
 
 function getself(fbtoken,ApiKey, callback){
   var path = '/v2.3/me?fields=id,name&access_token=' +fbtoken;
+  var response = {}
   fbcalls(path,function(response){
+
     var uid = response.id;
     var name = response.name;
     db.getUserIDByFBID(uid, function(err,res){
@@ -59,6 +62,7 @@ function getself(fbtoken,ApiKey, callback){
       }else{
         if(res.id){
           var data = [res[ID],fbtoken,uid];
+          response.userID = res[ID];
           db.setFBToken(data, function(err,res){
             if(err){
               console.log("Set FB token error");
@@ -67,7 +71,7 @@ function getself(fbtoken,ApiKey, callback){
                }
             else{
               console.log("ok");
-              callback(fbtoken);
+              callback(response);
             }
           });
         }else{
@@ -78,11 +82,12 @@ function getself(fbtoken,ApiKey, callback){
               return;
             }else{
               var userid = uuid.v4();
+              response.userID = userid;
               var data=[name, "facebookauthed","facebookauthed",res[0].Id,userid]
               db.setUserID(data,function(err,res){
                 if(err){
                   console.log("Set user error");
-	   	  console.log(err)
+	   	            console.log(err)
                   res.send(500);
                    return;
                    }
@@ -97,7 +102,8 @@ function getself(fbtoken,ApiKey, callback){
                        }
                     else{
                       console.log("ok");
-                      callback(fbtoken);
+                      response.token = fbtoken;
+                      callback(response);
                     }
                   });
                 }

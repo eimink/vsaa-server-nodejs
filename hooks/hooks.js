@@ -18,7 +18,7 @@ function refreshAppDatabase()
                 console.log(err)
     		return; // Not really a proper way to handle errors...
   		}
-                if(typeof res != 'undefined')
+                if(config.db_driver == 	'voltjs')
                 {
                  var apps = {}
                  res = res.table

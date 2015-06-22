@@ -51,7 +51,7 @@ exports.getAppID = function (data,callback){
 }
 
 exports.getFBToken = function (data,callback){
-  var sql = 'SELECT User_Id FROM Facebook WHERE UniqueID = ' + dbconnection.escape(data)
+  var sql = 'SELECT Token,User_Id FROM Facebook WHERE UniqueID = ' + dbconnection.escape(data)
   dbconnection.query(sql, callback);
 }
 exports.setFBToken = function (data,callback){

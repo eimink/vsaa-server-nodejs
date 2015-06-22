@@ -18,7 +18,7 @@ exports.tokenize = function (req, res) {
   fbauthtoken(path,res,function(response){
     getself(response,ApiKey,function(response){
       res.contentType = "application/hal+json";
-      var response = {"Token": response.token}
+      var response = {"Token": response.token, "UserID":response.userID}
       res.send(response);
     });
   });

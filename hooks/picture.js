@@ -5,8 +5,29 @@ var uuid = require('node-uuid');
 var request = require('request');
 
 exports.getpicture = function (req, res){
+
   //TODO: Get Picture
   //TODO: Return Picture
+  var response = {"Response":0};
+  if (!req.clientId) {
+    return res.sendUnauthenticated();
+  }
+  if ( req.body === undefined)
+  {
+    return res.MissingParameterError();
+  }
+  var usertoken = req.body.Token;
+  var userid = req.body.UserID;
+  var ApiKey = req.body.ApiKey;
+  db.getPicture(userid, function(){
+    if(err){
+      console.log("getpicture metadata error");
+      res.send(500);
+      return;
+    }else{
+      return getpicture(res[0].data)
+    }
+  });
   //TODO: Write test
 };
 exports.setpicture = function (req, res){
@@ -39,14 +60,14 @@ exports.setpicture = function (req, res){
         var name = uuid.v4();
         db.setPicture([name,id,ApiKey], function(err,res){
           if(err){
-            console.log("apikey error");
+            console.log("save error");
             res.send(500);
             return;
           }else{
             res.send(200)
           }
         });
-        savepicture('name', body);
+        savepicture(name, body);
       });
       }
       //TODO: Write test

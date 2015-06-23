@@ -18,14 +18,16 @@ exports.getpicture = function (req, res){
   }
   var usertoken = req.body.Token;
   var userid = req.body.UserID;
+  console.log(userid);
   var ApiKey = req.body.ApiKey;
-  db.getPicture(userid, function(){
+  db.getPicture(userid, function(err,response){
     if(err){
       console.log("getpicture metadata error");
       res.send(500);
       return;
     }else{
-      return getpicture(res[0].data)
+        console.log(response)
+	res.send(getpicture(response[0].Data))
     }
   });
   //TODO: Write test
@@ -63,9 +65,7 @@ exports.setpicture = function (req, res){
 	    console.log(err)
             console.log("save error");
             return 500
-            return;
           }else{
-            return 200
           }
         });
         savepicture(name, body);
@@ -74,6 +74,7 @@ exports.setpicture = function (req, res){
     });
   }
   });
+res.send(200);
 };
 
 function savepicture(picturename, picture){
@@ -90,13 +91,7 @@ function savepicture(picturename, picture){
 
 function getpicture(picturename){
   picturename = "/pictures/VSAA_" + picturename
-  fs.readFile(picturename , function read(err, data) {
-      if (err) {
-          throw err;
-      }
-      content = data;
-     return content;
-  });
+  return fs.readFileSync(picturename) 
 }
 
 function fbcalls(callpath,callback) {

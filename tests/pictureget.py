@@ -57,14 +57,14 @@ if(res.status_code != 200):
 print(res.text);
 res = json.loads(res.text)
 print("----------------")
-print("Starting Picture test")
 userid = res["UserID"]
 fbtoken = res["Token"]
+print("Starting Picture get test")
 data = {'ApiKey':'6ad','DeviceId':'test1', 'Description':'Generic event', 'message_type':'APPLICATION_EVENT_GENERIC','UserID':userid, 'Token':fbtoken}
-event = address + "/setpicture"
+event = address + "/getpicture"
 authtoken = type + " " + token
 headers['Authorization'] = authtoken
 res = requests.post(event,headers=headers,data=data)
 if(res.status_code != 200):
   print ("Failure while getting picture")
-  sys.exit("Facebook picture failure")
+  sys.exit("picture failure")

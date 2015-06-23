@@ -86,6 +86,6 @@ exports.setPicture = function (data, callback) {
 };
 exports.getPicture = function (data, callback) {
   // Inserting our data and making sure it goes under correct app by FK
-  var sql = 'SELECT data FROM Metadata WHERE User_Id =' + dbconnection.escape(data[0]);
+  var sql = 'SELECT Data FROM Metadata WHERE User_Id =' + dbconnection.escape(data);
   dbconnection.query(sql, callback);
 };

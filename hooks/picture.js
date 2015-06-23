@@ -42,7 +42,7 @@ exports.setpicture = function (req, res){
   var usertoken = req.body.Token;
   var userid = req.body.UserID;
   var ApiKey = req.body.ApiKey;
-  db.getFBToken(userid,function(err,res){
+  db.getFBTokenUID(userid,function(err,res){
     if(err){
       console.log("apikey error");
       res.send(500);

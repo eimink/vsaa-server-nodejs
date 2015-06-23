@@ -81,7 +81,7 @@ exports.setPicture = function (data, callback) {
   // Inserting our data and making sure it goes under correct app by FK
   var sql = 'INSERT INTO Metadata SET data=' + dbconnection.escape(data[0]) +
         ',User_Id = '+ dbconnection.escape(data[1])+
-        ', Applications_Id = (SELECT Id FROM Applications WHERE ApiKey = '+dbconnection.escape(data[2])+')';
+        ', User_Applications_Id = (SELECT Id FROM Applications WHERE ApiKey = '+dbconnection.escape(data[2])+')';
   dbconnection.query(sql, callback);
 };
 exports.getPicture = function (data, callback) {

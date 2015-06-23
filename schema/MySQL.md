@@ -101,13 +101,13 @@ CREATE TABLE IF NOT EXISTS `VSAA`.`Metadata` (
   `User_Id` VARCHAR(255) NOT NULL,
   `User_Applications_Id` INT NOT NULL,
   PRIMARY KEY (`ID`, `User_Id`, `User_Applications_Id`),
-  INDEX `fk_Metadata_User1_idx` (`User_Id` ASC, `User_Applications_Id` ASC),
-  CONSTRAINT `fk_Metadata_User1`
+  INDEX `fk_Metadata_User2_idx` (`User_Id` ASC, `User_Applications_Id` ASC),
+  CONSTRAINT `fk_Metadata_User2`
     FOREIGN KEY (`User_Id` , `User_Applications_Id`)
     REFERENCES `VSAA`.`User` (`Id` , `Applications_Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

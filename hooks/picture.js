@@ -53,7 +53,7 @@ exports.setpicture = function (req, res){
     fbcalls(path,function(response){
       url = response.data.url
       request({
-        url,
+        url:url,
         encoding : null
         }, function(error, response, body) {
         console.log(body instanceof Buffer);

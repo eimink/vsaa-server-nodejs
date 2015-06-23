@@ -60,9 +60,10 @@ function getself(fbtoken,ApiKey, callback){
         res.send(500);
         return;
       }else{
-        if(res.id){
-          var data = [res[ID],fbtoken,uid];
-          response.userID = res[ID];
+	console.log(res)
+        if(res[0].Id){
+          var data = [res[0].Id,fbtoken,uid];
+          response.userID = res[0].Id;
           db.setFBToken(data, function(err,res){
             if(err){
               console.log("Set FB token error");
@@ -70,8 +71,8 @@ function getself(fbtoken,ApiKey, callback){
                return;
                }
             else{
-              console.log("ok");
-              callback(response);
+              console.log("ok user found");
+              return callback(response);
             }
           });
         }else{

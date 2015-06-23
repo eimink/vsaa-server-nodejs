@@ -51,20 +51,21 @@ exports.setpicture = function (req, res){
     var id =res[0].User_Id
     var path = '/v2.3/me/picture?type=large&redirect=false&access_token=' +res[0].Token;
     fbcalls(path,function(response){
-      url = response.data.url
+      console.log(response.data.url)
       request({
-        url,
+        url:response.data.url,
         encoding : null
         }, function(error, response, body) {
         console.log(body instanceof Buffer);
         var name = uuid.v4();
         db.setPicture([name,id,ApiKey], function(err,res){
           if(err){
+	    console.log(err)
             console.log("save error");
-            res.send(500);
+            return 500
             return;
           }else{
-            res.send(200)
+            return 200
           }
         });
         savepicture(name, body);

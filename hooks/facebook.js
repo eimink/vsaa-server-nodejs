@@ -64,6 +64,7 @@ function getself(fbtoken,ApiKey, callback){
         if(res[0].Id){
           var data = [res[0].Id,fbtoken,uid];
           response.userID = res[0].Id;
+          response.token = fbtoken;
           db.setFBToken(data, function(err,res){
             if(err){
               console.log("Set FB token error");

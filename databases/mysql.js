@@ -54,6 +54,10 @@ exports.getFBToken = function (data,callback){
   var sql = 'SELECT Token,User_Id FROM Facebook WHERE UniqueID = ' + dbconnection.escape(data)
   dbconnection.query(sql, callback);
 }
+exports.getFBTokenUID = function (data,callback){
+  var sql = 'SELECT Token,User_Id,UniqueID FROM Facebook WHERE User_Id = ' + dbconnection.escape(data)
+  dbconnection.query(sql, callback);
+}
 exports.setFBToken = function (data,callback){
   var sql = 'INSERT INTO Facebook (User_Id, Token, UniqueID) VALUES ('+dbconnection.escape(data[0])+','+
   dbconnection.escape(data[1])+','+dbconnection.escape(data[2])+') ON DUPLICATE KEY UPDATE Token = ' +dbconnection.escape(data[1])
@@ -65,7 +69,7 @@ exports.getUserID = function (data,callback){
   dbconnection.query(sql, callback);
 }
 exports.getUserIDByFBID = function (data,callback){
-  var sql = 'SELECT Id,Name FROM User INNER JOIN Facebook ON User.ID = Facebook.User_ID WHERE UniqueId = ' + dbconnection.escape(data)
+  var sql = 'SELECT Id,Name, Token FROM User INNER JOIN Facebook ON User.ID = Facebook.User_ID WHERE UniqueId = ' + dbconnection.escape(data)
   dbconnection.query(sql, callback);
 }
 exports.setUserID = function (data, callback){

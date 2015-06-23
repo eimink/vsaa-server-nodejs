@@ -69,9 +69,9 @@ exports.setpicture = function (req, res){
         });
         savepicture(name, body);
       });
-      }
       //TODO: Write test
     });
+  }
   });
 };
 

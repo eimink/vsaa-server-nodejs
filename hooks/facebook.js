@@ -61,7 +61,7 @@ function getself(fbtoken,ApiKey, callback){
         return;
       }else{
 	console.log(res)
-        if(res[0].Id){
+        if('undefined' !== typeof res[0]){
           var data = [res[0].Id,fbtoken,uid];
           response.userID = res[0].Id;
           response.token = fbtoken;

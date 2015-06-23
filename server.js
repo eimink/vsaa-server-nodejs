@@ -13,6 +13,7 @@ var hooks = require("./hooks/hooks");
 var events = require("./hooks/event");
 var initials = require("./hooks/initial");
 var facebook = require("./hooks/facebook");
+var picture = require("./hooks/picture");
 // Process variables
 
 var server = restify.createServer({
@@ -35,7 +36,9 @@ global.RESOURCES = Object.freeze({
 	INITIAL: "/",
 	TOKEN: "/login",
 	EVENT: "/event",
-	FB: "/fbtoken"
+	FB: "/fbtoken",
+	SETPICTURE: "/setpicture",
+	GETPICTURE: "/getpicture"
 });
 
 server.use(restify.authorizationParser());
@@ -47,6 +50,9 @@ server.get(RESOURCES.INITIAL, initials.initialz);
 server.post(RESOURCES.EVENT, events.eventlaunch);
 
 server.post(RESOURCES.FB, facebook.tokenize);
+
+server.post(RESOURCES.SETPICTURE, picture.setpicture);
+server.post(RESOURCES.GETPICTURE, picture.getpicture);
 
 // Adding error information output, and killing process when this happens.
 process.on('uncaughtException', function (err) {

@@ -12,6 +12,11 @@ ID  NAME  APIKEY  APISECRET                APISALT
 
 0   test  6ad     96ce135c4030ac5809ce403  DERP
 
+
+Test2 requires
+
+> INSERT INTO User (Id,Applications_Id, Name, Password,Salt , age, regdate) VALUES (0,0,'testi','test','test',0,CURRENT_TIMESTAMP);
+
 ------
 RELATIO DB:
 ------

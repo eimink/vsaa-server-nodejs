@@ -5,9 +5,6 @@ var uuid = require('node-uuid');
 var request = require('request');
 
 exports.getpicture = function (req, res){
-
-  //TODO: Get Picture
-  //TODO: Return Picture
   var response = {"Response":0};
   if (!req.clientId) {
     return res.sendUnauthenticated();
@@ -30,7 +27,7 @@ exports.getpicture = function (req, res){
 	res.send(getpicture(response[0].Data))
     }
   });
-  //TODO: Write test
+
 };
 exports.setpicture = function (req, res){
   var response = {"Response":0};
@@ -70,7 +67,7 @@ exports.setpicture = function (req, res){
         });
         savepicture(name, body);
       });
-      //TODO: Write test
+      
     });
   }
   });
@@ -91,7 +88,7 @@ function savepicture(picturename, picture){
 
 function getpicture(picturename){
   picturename = "/pictures/VSAA_" + picturename
-  return fs.readFileSync(picturename) 
+  return fs.readFileSync(picturename)
 }
 
 function fbcalls(callpath,callback) {

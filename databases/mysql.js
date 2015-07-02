@@ -92,14 +92,14 @@ exports.getPicture = function (data, callback) {
 
 exports.getUsers = function (data,callback) {
   // Inserting our data and making sure it goes under correct app by FK
-  var sql = 'SELECT * FROM (SELECT count(Id) AS calc, User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id=Metadata.User_Id LEFT JOIN Relationship ON \''+
-  dbconnection.escape(data)+ '\'= Relationship.Friend_ID WHERE Relationship.Friend_ID IS NULL  ) as tabl WHERE rand() < 10/ tabl.calc LIMIT 10'
+  var sql = 'SELECT * FROM (SELECT count(Id) AS calc, User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User LEFT JOIN Metadata ON User.Id=Metadata.User_Id LEFT JOIN Relationship ON '+
+  dbconnection.escape(data)+ '= Relationship.Friend_ID WHERE Relationship.Friend_ID IS NULL  ) as tabl WHERE rand() < 10/ tabl.calc LIMIT 10'
   dbconnection.query(sql, callback);
 };
 
 exports.getUser = function (data,callback) {
   // Inserting our data and making sure it goes under correct app by FK
-  var sql = 'SELECT User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id = Metadata.User_Id WHERE \''+dbconnection.escape(data)+ '\' = Id'
+  var sql = 'SELECT User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User LEFT JOIN Metadata ON User.Id = Metadata.User_Id WHERE '+dbconnection.escape(data)+ ' = User.Id'
   dbconnection.query(sql, callback);
 };
 

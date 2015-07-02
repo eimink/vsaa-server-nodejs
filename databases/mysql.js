@@ -89,3 +89,31 @@ exports.getPicture = function (data, callback) {
   var sql = 'SELECT Data FROM Metadata WHERE User_Id =' + dbconnection.escape(data);
   dbconnection.query(sql, callback);
 };
+
+exports.getUsers = function (data,callback) {
+  // Inserting our data and making sure it goes under correct app by FK
+  var sql = 'SELECT * FROM (SELECT count(Id) AS calc, User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id=Metadata.User_Id LEFT JOIN Relationship ON \''+
+  dbconnection.escape(data)+ '\'= Relationship.Friend_ID WHERE Relationship.Friend_ID IS NULL  ) as tabl WHERE rand() < 10/ tabl.calc LIMIT 10'
+  dbconnection.query(sql, callback);
+};
+
+exports.getUser = function (data,callback) {
+  // Inserting our data and making sure it goes under correct app by FK
+  var sql = 'SELECT User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id = Metadata.User_Id WHERE \''+dbconnection.escape(data)+ '\' = Id'
+  dbconnection.query(sql, callback);
+};
+
+exports.getRelations = function (data,callback) {
+  // Inserting our data and making sure it goes under correct app by FK
+  var sql = 'SELECT Friend_ID, Data, MyStatus, FStatus FROM ( SELECT MeU ,x.Friend_ID AS Friend_ID, x.Status AS MyStatus, y.Status AS FStatus FROM ( SELECT Friend_ID, Status,User_Id AS MeU FROM Relationship WHERE User_Id = '+
+dbconnection.escape(data) +') AS x INNER JOIN (SELECT User_Id, Status,Friend_ID AS MeF FROM Relationship WHERE Friend_ID = '+
+dbconnection.escape(data) +') AS y ON x.MeU = y.MeF ) AS Relatios INNER JOIN User ON Relatios.Friend_ID = User.Id LEFT JOIN Metadata ON User.Id = Metadata.User_Id;'
+  dbconnection.query(sql, callback);
+};
+
+exports.setRelations = function (data,callback) {
+  // Inserting our data and making sure it goes under correct app by FK
+  var sql = 'INSERT INTO Relationship (User_Id, Friend_ID, Status) VALUES ('+
+  dbconnection.escape(data[0])+ ','+dbconnection.escape(data[1])+','+dbconnection.escape(data[2])+' )';
+  dbconnection.query(sql, callback);
+};

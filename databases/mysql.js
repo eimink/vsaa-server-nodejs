@@ -92,7 +92,7 @@ exports.getPicture = function (data, callback) {
 
 exports.getUsers = function (data,callback) {
   // Inserting our data and making sure it goes under correct app by FK
-  var sql = 'SELECT * FROM (SELECT count(Id) AS calc, User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id=Metadata.User_Id LEFT JOIN Relationship ON \''+
+  var sql = 'SELECT * FROM (SELECT count(User.Id) AS calc, User.Name AS Name, User.Id AS uId, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id=Metadata.User_Id LEFT JOIN Relationship ON \''+
   dbconnection.escape(data)+ '\'= Relationship.Friend_ID WHERE Relationship.Friend_ID IS NULL  ) as tabl WHERE rand() < 10/ tabl.calc LIMIT 10'
   dbconnection.query(sql, callback);
 };
@@ -101,7 +101,7 @@ exports.getUser = function (data,callback) {
   // Inserting our data and making sure it goes under correct app by FK
   var sql = 'SELECT User.Name AS Name, User.Id AS Id, Metadata.Data AS data FROM User INNER JOIN Metadata ON User.Id = Metadata.User_Id WHERE \''+dbconnection.escape(data)+ '\' = Id'
   dbconnection.query(sql, callback);
-};
+}
 
 exports.getRelations = function (data,callback) {
   // Inserting our data and making sure it goes under correct app by FK
@@ -115,5 +115,10 @@ exports.setRelations = function (data,callback) {
   // Inserting our data and making sure it goes under correct app by FK
   var sql = 'INSERT INTO Relationship (User_Id, Friend_ID, Status) VALUES ('+
   dbconnection.escape(data[0])+ ','+dbconnection.escape(data[1])+','+dbconnection.escape(data[2])+' )';
+  dbconnection.query(sql, callback);
+};
+
+exports.dropRelatio = function (data,callback) {
+  var sql = 'DELETE FROM Relationship WHERE User_Id = '+dbconnection.escape(data[0])+' AND Friend_ID = '+dbconnection.escape(data[1])+';';
   dbconnection.query(sql, callback);
 };

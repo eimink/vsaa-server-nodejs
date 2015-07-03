@@ -43,7 +43,8 @@ global.RESOURCES = Object.freeze({
 	SETRELATIO: "/setrelatio",
 	GETRELATIO: "/getrelatio",
 	GETUSER: "/getuser",
-	GETUSERS: "/getusers"
+	GETUSERS: "/getusers",
+	DROPRELATIO: "/droprelatio"
 });
 
 server.use(restify.authorizationParser());
@@ -63,6 +64,7 @@ server.post(RESOURCES.SETRELATIO, relationship.setRelatio);
 server.post(RESOURCES.GETRELATIO, relationship.getRelatio);
 server.post(RESOURCES.GETUSER, relationship.getUser);
 server.post(RESOURCES.GETUSERS, relationship.getUsers);
+server.post(RESOURCES.DROPRELATIO, relationship.dropRelatio);
 
 // Adding error information output, and killing process when this happens.
 process.on('uncaughtException', function (err) {

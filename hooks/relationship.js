@@ -29,6 +29,32 @@ exports.setRelatio = function (req, res){
   });
 };
 
+exports.setRelatio = function (req, res){
+  var response = {"Response":0};
+  if (!req.clientId) {
+    return res.sendUnauthenticated();
+  }
+  if ( req.body === undefined)
+  {
+    return res.MissingParameterError();
+  }
+  var userid = req.body.UserID;
+  var friendid = req.body.FriendID;
+  var ApiKey = req.body.ApiKey;
+  db.dropRelatio([userid,friendid,], function(err,response){
+    if(err){
+      console.log("Set Relatio error");
+      console.log(err);
+      res.send(500);
+      return;
+    }else{
+        console.log(200)
+        res.send(200)
+    }
+  });
+};
+
+
 exports.getRelatio = function (req, res){
 
   var response = {"Response":0};
@@ -55,6 +81,7 @@ exports.getRelatio = function (req, res){
     }
   });
 };
+
 
 exports.getUser = function (req, res){
 

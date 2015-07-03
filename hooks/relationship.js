@@ -29,7 +29,7 @@ exports.setRelatio = function (req, res){
   });
 };
 
-exports.setRelatio = function (req, res){
+exports.dropRelatio = function (req, res){
   var response = {"Response":0};
   if (!req.clientId) {
     return res.sendUnauthenticated();

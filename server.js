@@ -15,6 +15,8 @@ var initials = require("./hooks/initial");
 var facebook = require("./hooks/facebook");
 var picture = require("./hooks/picture");
 var relationship = require("./hooks/relationship");
+var group = require("./hooks/group");
+
 // Process variables
 
 var server = restify.createServer({
@@ -45,6 +47,15 @@ global.RESOURCES = Object.freeze({
 	GETUSER: "/getuser",
 	GETUSERS: "/getusers",
 	DROPRELATIO: "/droprelatio"
+	GETGROUPID: "/getgroupid",
+	GETUSERSGROUPS: "/getusersgroup",
+	GETNEWGROUPS:"/getnewgroups",
+	GETGROUPS:"/getgroups",
+	GETGROUP:"/getgroup",
+	DESTROYGROUP:"/destroygroup",
+	LEAVEGROUP:"/leavegroup",
+	JOINGROUP:"/joingroup",
+	CREATEGROUP:"/creategroup"
 });
 
 server.use(restify.authorizationParser());
@@ -65,6 +76,16 @@ server.post(RESOURCES.GETRELATIO, relationship.getRelatio);
 server.post(RESOURCES.GETUSER, relationship.getUser);
 server.post(RESOURCES.GETUSERS, relationship.getUsers);
 server.post(RESOURCES.DROPRELATIO, relationship.dropRelatio);
+
+server.post(RESOURCES.GETGROUPID, group.getGroupId);
+server.post(RESOURCES.GETUSERSGROUPS, group.getUsersGroups);
+server.post(RESOURCES.GETNEWGROUPS, group.getNewGroups);
+server.post(RESOURCES.GETGROUPS, group.getGroups);
+server.post(RESOURCES.GETGROUP, group.getGroup);
+server.post(RESOURCES.DESTROYGROUP, group.destroyGroup);
+server.post(RESOURCES.LEAVEGROUP, group.leaveGroup);
+server.post(RESOURCES.JOINGROUP, group.joinGroup);
+server.post(RESOURCES.CREATEGROUP, group.createGroup);
 
 // Adding error information output, and killing process when this happens.
 process.on('uncaughtException', function (err) {

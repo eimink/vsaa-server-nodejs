@@ -122,3 +122,48 @@ exports.dropRelatio = function (data,callback) {
   var sql = 'DELETE FROM Relationship WHERE User_Id = '+dbconnection.escape(data[0])+' AND Friend_ID = '+dbconnection.escape(data[1])+';';
   dbconnection.query(sql, callback);
 };
+
+exports.createGroup = function (data,callback) {
+  var sql = 'INSERT INTO EventPlace (name,created,Happening,Locatio,Owner) VALUES ('+dbconnection.escape(data[0])+', CURRENT_TIMESTAMP,'+dbconnection.escape(data[1])+' ,'+dbconnection.escape(data[2])+''+dbconnection.escape(data[3])+'  )'
+  dbconnection.query(sql, callback);
+}
+
+exports.joinGroup = function (data,callback) {
+  var sql = 'INSERT INTO UserIsInGroup (User_Id,EventPlace_eventId,joined) VALUES ('+dbconnection.escape(data[0])+','+dbconnection.escape(data[1])+',CURRENT_TIMESTAMP)'
+  dbconnection.query(sql, callback);
+}
+
+exports.leaveGroup = function (data,callback) {
+  var sql = 'DELETE FROM UserIsInGroup WHERE User_Id = '+dbconnection.escape(data[0])+' AND EventPlace_eventId = '+dbconnection.escape(data[1])+';'
+  dbconnection.query(sql, callback);
+}
+
+exports.destroyGroup = function (data,callback) {
+  var sql = 'DELETE FROM EventPlace WHERE Owner = '+dbconnection.escape(data[0])+' AND eventId =  '+dbconnection.escape(data[1])+''
+  dbconnection.query(sql, callback);
+}
+
+exports.getGroup = function (data,callback) {
+  var sql = 'SELECT eventId, name,created,Happening,Locatio,Owner FROM EventPlace WHERE eventId = '+dbconnection.escape(data)+''
+  dbconnection.query(sql, callback);
+}
+
+exports.getGroups = function (callback) {
+  var sql = 'SELECT eventId, name,created,Happening,Locatio,Owner FROM EventPlace'
+  dbconnection.query(sql, callback);
+}
+
+exports.getNewGroups = function (data,callback) {
+  var sql = 'SELECT eventId, name,created,Happening,Locatio,Owner FROM EventPlace WHERE eventId NOT IN (SELECT EventPlace_eventId FROM UserIsInGroup WHERE User_Id = '+dbconnection.escape(data)+')'
+  dbconnection.query(sql, callback);
+}
+
+exports.getUsersGroups = function (data,callback) {
+  var sql = 'SELECT eventId, name,created,Happening,Locatio,Owner FROM EventPlace RIGHT JOIN UserIsInGroup ON EventPlace.eventId = UserIsInGroup.EventPlace_eventId WHERE UserIsInGroup.User_Id = '+dbconnection.escape(data)+''
+  dbconnection.query(sql, callback);
+}
+
+exports.getGroupId = function (data,callback) {
+  var sql = 'SELECT eventId, name,created,Happening,Locatio,Owner FROM EventPlace WHERE name = '+dbconnection.escape(data)+''
+  dbconnection.query(sql, callback);
+}
